@@ -24,6 +24,28 @@ namespace MvcCar.Controllers
             return View(await _context.Car.ToListAsync());
         }
 
+        public async Task<IActionResult> Sort(string sort)
+        {
+              if (sort == null) return RedirectToAction("Index");
+
+            IQueryable<Car> query = _context.Car.AsQueryable();
+
+                if (sort != null && sort.Trim().ToUpper() == "ASC")
+                {
+                    query = _context.Car.OrderBy(p => p.ReleaseDate);
+                }
+
+                if (sort != null && sort.Trim().ToUpper() == "DESC")
+                {
+                    query = _context.Car.OrderByDescending(p => p.ReleaseDate);
+                }
+
+                var result = await query.ToListAsync();
+
+                return View("Index",result);
+            
+        }
+
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
         {
