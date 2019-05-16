@@ -10,11 +10,13 @@
     <a asp-action="Create">Create New</a>
 
 </p>
-<p>
-    <a asp-action="Sort" asp-route-sort="asc">Sort Asc</a>&nbsp;
-    <a asp-action="Sort" asp-route-sort="desc">Sort Desc</a>
-</p>
 
+<form asp-controller="Cars" asp-action="Filter">
+    <p>
+        Name: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -58,3 +60,8 @@
         }
     </tbody>
 </table>
+
+<p>
+    <a asp-action="Sort" asp-route-sort="asc">Sort Asc</a>&nbsp;
+    <a asp-action="Sort" asp-route-sort="desc">Sort Desc</a>
+</p>
