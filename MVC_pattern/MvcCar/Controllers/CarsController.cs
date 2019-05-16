@@ -23,6 +23,18 @@ namespace MvcCar.Controllers
         {
             return View(await _context.Car.ToListAsync());
         }
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var cars = from m in _context.Car
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+               cars = cars.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View("index",await cars.ToListAsync());
+        }
 
         public async Task<IActionResult> Sort(string sort)
         {
@@ -70,9 +82,7 @@ namespace MvcCar.Controllers
             return View();
         }
 
-        // POST: Cars/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,ReleaseDate,Color,Price")] Car car)
@@ -102,9 +112,7 @@ namespace MvcCar.Controllers
             return View(car);
         }
 
-        // POST: Cars/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,Color,Price")] Car car)
