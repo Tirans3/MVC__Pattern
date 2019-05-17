@@ -13,6 +13,7 @@ namespace MvcCar.Models
         [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
         public string Color { get; set; }
+        public string Size { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
