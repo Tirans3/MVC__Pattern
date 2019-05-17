@@ -19,21 +19,31 @@ namespace MvcCar.Controllers
         }
 
         // GET: Cars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string carSize, string searchString)
         {
-            return View(await _context.Car.ToListAsync());
-        }
-        public async Task<IActionResult> Filter(string searchString)
-        {
+            IQueryable<string> genreQuery = from m in _context.Car
+                                            orderby m.Size
+                                            select m.Size;
+
             var cars = from m in _context.Car
                          select m;
-
             if (!string.IsNullOrEmpty(searchString))
             {
-               cars = cars.Where(s => s.Name.Contains(searchString));
+                cars = cars.Where(s => s.Name.Contains(searchString));
             }
 
-            return View("index",await cars.ToListAsync());
+            if (!string.IsNullOrEmpty(carSize))
+            {
+               cars = cars.Where(x => x.Size == carSize);
+            }
+
+            var CarSizeVM = new CareSizeViewModel
+            {
+                Sizes = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Cars = await cars.ToListAsync()
+            };
+
+            return View(CarSizeVM);
         }
 
         public async Task<IActionResult> Sort(string sort)
