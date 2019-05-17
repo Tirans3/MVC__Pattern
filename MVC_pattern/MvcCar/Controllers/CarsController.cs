@@ -85,7 +85,7 @@ namespace MvcCar.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ReleaseDate,Color,Price")] Car car)
+        public async Task<IActionResult> Create([Bind("Id,Name,ReleaseDate,Color,Price,Size")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace MvcCar.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,Color,Price")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ReleaseDate,Color,Price,Size")] Car car)
         {
             if (id != car.Id)
             {
