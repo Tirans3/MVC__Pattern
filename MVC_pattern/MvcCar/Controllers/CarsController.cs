@@ -62,9 +62,16 @@ namespace MvcCar.Controllers
                     query = _context.Car.OrderByDescending(p => p.ReleaseDate);
                 }
 
-                var result = await query.ToListAsync();
+                
 
-                return View("Index",result);
+            var SortCar = new CareSizeViewModel
+            {
+                
+                Cars = await query.ToListAsync()
+
+            };
+
+            return View("Index",SortCar);
             
         }
 
